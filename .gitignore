@@ -1,0 +1,36 @@
+# development
+/.idea
+/.vs
+/.vscode
+*.sublime-project
+*.sublime-workspace
+/.settings
+
+ dependencies
+node_modules
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.yarn-integrity
+tsconfig.tsbuildinfo
+
+# misc
+.DS_Store
+.AppleDouble
+.LSOverride
+$RECYCLE.BIN/
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+._*
+
+# dist
+dist/*
+!dist/index.js

@@ -1,0 +1,40 @@
+name: 'Brickdoc App Engine'
+description: 'Brickdoc App Engine is a MicroPaaS based on kubernetes'
+inputs:
+  type:
+    description: 'app type'
+    required: true
+    default: 'web'
+  name:
+    description: 'app name'
+    required: true
+  namespace:
+    description: 'kubernetes namespace'
+    required: true
+    default: 'cicd'
+  image:
+    description: 'Docker image name with tag'
+    required: false
+  url:
+    description: 'Website Url. default value is ${name}.${ENV.BAE_DOMAIN}'
+    required: false
+  chart:
+    description: 'Helm Charts'
+    required: true
+    default: '/charts/bae-simple-web'
+  containerPort:
+    description: 'Container Server Port'
+    required: true
+    default: '3000'
+  dryRun:
+    description: 'Helm dry-run option. default value is `false`'
+    required: true
+    default: false
+  task:
+    description: 'Helm action `"publish" | "remove"`'
+    required: true
+    default: 'publish'
+
+runs:
+  using: docker
+  image: Dockerfile
