@@ -89,17 +89,17 @@ jobs:
 
 ### Inputs
 
-| Name            | Type                    | Description                                                                    |
-| --------------- | ----------------------- | ------------------------------------------------------------------------------ |
-| `type`          | `"web" or "service"`    | **Required**. App type. default value is `"web"`                               |
-| `name`          | String                  | **Required**. App name.                                                        |
-| `namespace`     | String                  | **Required**. kubernetes namespace. default value is "cicd"                    |
-| `image`         | String                  | Docker image with tag. defualt value is `ghcr.io/${github-org}/${name}:latest` |
-| `host`          | String                  | Website ingress host. default value is `${name}.${ENV.BAE_DOMAIN}`             |
-| `chart`         | String                  | Helm charts. default value is `/charts/bae-simple-web`                         |
-| `containerPort` | String                  | Container server port. default value is `"3000"`                               |
-| `dryRun`        | Boolean                 | Helm dry-run option. default value is `false`                                  |
-| `task`          | `"publish" or "remove"` | Helm action. default value is `"publish"`                                      |
+| Name            | Type                   | Description                                                                    |
+| --------------- | ---------------------- | ------------------------------------------------------------------------------ |
+| `type`          | `"web" or "service"`   | **Required**. App type. default value is `"web"`                               |
+| `name`          | String                 | **Required**. App name.                                                        |
+| `namespace`     | String                 | **Required**. kubernetes namespace. default value is "cicd"                    |
+| `image`         | String                 | Docker image with tag. defualt value is `ghcr.io/${github-org}/${name}:latest` |
+| `host`          | String                 | Website ingress host. default value is `${name}.${ENV.BAE_DOMAIN}`             |
+| `chart`         | String                 | Helm charts. default value is `/charts/bae-simple-web`                         |
+| `containerPort` | String                 | Container server port. default value is `"3000"`                               |
+| `dryRun`        | Boolean                | Helm dry-run option. default value is `false`                                  |
+| `task`          | `"deploy" or "remove"` | Helm action. default value is `"deploy"`                                       |
 
 ## License
 

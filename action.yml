@@ -31,9 +31,9 @@ inputs:
     required: true
     default: false
   task:
-    description: 'Helm action `"publish" | "remove"`'
+    description: 'Helm action `"deploy" | "remove"`'
     required: true
-    default: 'publish'
+    default: 'deploy'
 
 runs:
   using: docker

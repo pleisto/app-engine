@@ -218,7 +218,7 @@ function runAppEngine() {
                 yield deploymentStatus_1.setDeploymentStatus('inactive');
                 return;
             }
-            else if (task === "publish") {
+            else if (task === "deploy") {
                 // init
                 const type = core.getInput("type");
                 const chart = core.getInput("chart");
