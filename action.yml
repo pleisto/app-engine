@@ -15,8 +15,8 @@ inputs:
   image:
     description: 'Docker image name with tag'
     required: false
-  url:
-    description: 'Website Url. default value is ${name}.${ENV.BAE_DOMAIN}'
+  host:
+    description: 'Ingress host. default value is ${name}.${ENV.BAE_DOMAIN}'
     required: false
   chart:
     description: 'Helm Charts'

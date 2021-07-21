@@ -53,7 +53,7 @@ function setDeploymentStatus(state) {
                 return;
             }
             const client = github.getOctokit(token);
-            yield client.rest.repos.createDeploymentStatus(Object.assign(Object.assign({}, ghContext.repo), { deployment_id: deployment.id, environment: name, state, log_url: isService ? serviceUrl : ingressHost(), mediaType: {
+            yield client.rest.repos.createDeploymentStatus(Object.assign(Object.assign({}, ghContext.repo), { deployment_id: deployment.id, environment: name, state, log_url: isService ? serviceUrl : `https://${ingressHost()}`, mediaType: {
                     previews: [
                         "flash",
                         "ant-man"
@@ -71,8 +71,8 @@ function setDeploymentStatus(state) {
 exports.setDeploymentStatus = setDeploymentStatus;
 function ingressHost() {
     const name = core.getInput('name');
-    const appUrl = core.getInput('url');
-    return (appUrl) || `${name}.${process.env.BAE_DOMAIN}`;
+    const host = core.getInput('host');
+    return host || `${name}.${process.env.BAE_DOMAIN}`;
 }
 exports.ingressHost = ingressHost;
 

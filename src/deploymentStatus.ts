@@ -22,7 +22,7 @@ export async function setDeploymentStatus(state: "error" | "failure" | "inactive
       deployment_id: deployment.id,
       environment: name as any,
       state,
-      log_url: isService ? serviceUrl : ingressHost(),
+      log_url: isService ? serviceUrl : `https://${ingressHost()}`,
       mediaType:{
         previews: [
           "flash",
@@ -47,6 +47,6 @@ export async function setDeploymentStatus(state: "error" | "failure" | "inactive
 
 export function ingressHost():string {
   const name = core.getInput('name')
-  const appUrl = core.getInput('url')
-  return (appUrl) || `${name}.${process.env.BAE_DOMAIN}`
+  const host = core.getInput('host')
+  return host || `${name}.${process.env.BAE_DOMAIN}`
 }

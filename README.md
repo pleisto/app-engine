@@ -63,11 +63,12 @@ jobs:
       - name: Deployment to BAE
         uses: brickdoc/app-engine@v1
         with:
-          type: web
-          name: example
-          image: orgs/${{ env.appName }}:${{ github.sha }}
+          name: example-prod
+          containerPort: 8000
         env:
-          APP_ENV_RAILS_ENV: production
+          AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}
+          APP_ENV_NODE_ENV: production
           APP_SECRET_MASTER_KEY: ${{ secrets.SuperSecret }}
 ```
 
@@ -88,16 +89,17 @@ jobs:
 
 ### Inputs
 
-| Name | Type | Description |
-| `type` | `"web" | "service"` | **Required**. App type. default value is `"web"` |
-| `name` | String | **Required**. App name. |
-| `namespace` | String | **Required**. kubernetes namespace. default value is "cicd" |
-| `image` | String | docker image with tag. defualt value is `ghcr.io/${github-org}/${name}:latest` |
-| `url` | String | Website Url. default value is `${name}.${ENV.BAE_DOMAIN}` |
-| `chart` | String | Helm Charts. default value is `/charts/bae-simple-web` |
-| `containerPort` | String | Container Server Port. default value is `"3000"` |
-| `dryRun` | Boolean | Helm dry-run option. default value is `false` |
-| `task` | `"publish" | "remove"` | Helm action. default value is `"publish"` |
+| Name            | Type                    | Description                                                                    |
+| --------------- | ----------------------- | ------------------------------------------------------------------------------ |
+| `type`          | `"web" or "service"`    | **Required**. App type. default value is `"web"`                               |
+| `name`          | String                  | **Required**. App name.                                                        |
+| `namespace`     | String                  | **Required**. kubernetes namespace. default value is "cicd"                    |
+| `image`         | String                  | Docker image with tag. defualt value is `ghcr.io/${github-org}/${name}:latest` |
+| `host`          | String                  | Website ingress host. default value is `${name}.${ENV.BAE_DOMAIN}`             |
+| `chart`         | String                  | Helm charts. default value is `/charts/bae-simple-web`                         |
+| `containerPort` | String                  | Container server port. default value is `"3000"`                               |
+| `dryRun`        | Boolean                 | Helm dry-run option. default value is `false`                                  |
+| `task`          | `"publish" or "remove"` | Helm action. default value is `"publish"`                                      |
 
 ## License
 
