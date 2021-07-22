@@ -108,6 +108,7 @@ jobs:
 | `type`          | `"web" or "service"`   | **Required**. App type. default value is `"web"`                               |
 | `name`          | String                 | **Required**. App name.                                                        |
 | `namespace`     | String                 | **Required**. kubernetes namespace. default value is "cicd"                    |
+| `token`         | String                 | **Required**. Github Token                                                     |
 | `image`         | String                 | Docker image with tag. defualt value is `ghcr.io/${github-org}/${name}:latest` |
 | `host`          | String                 | Website ingress host. default value is `${name}.${ENV.BAE_DOMAIN}`             |
 | `chart`         | String                 | Helm charts. default value is `/charts/bae-simple-web`                         |

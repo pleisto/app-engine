@@ -1,15 +1,13 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as exec from '@actions/exec'
-import { setDeploymentStatus, ingressHost, createDeployment } from './deploymentStatus'
+import { setDeploymentStatus, ingressHost } from './deploymentStatus'
 import { createValuesFile, valuesFile } from './env'
 import { updateKubeconfig } from './eks'
 
 async function runAppEngine(): Promise<void> {
   try {
-    const { id: deployment_id } = await createDeployment()
-
-    await setDeploymentStatus('pending', deployment_id)
+    await setDeploymentStatus('pending')
 
     const namespace = core.getInput('namespace')
     const name = core.getInput('name')
@@ -22,7 +20,7 @@ async function runAppEngine(): Promise<void> {
       await exec.exec('helm', ['delete', '-n', namespace, name], {
         ignoreReturnCode: true
       })
-      await setDeploymentStatus('inactive', deployment_id)
+      await setDeploymentStatus('inactive')
       return
     } else if (task === 'deploy') {
       // init
@@ -56,7 +54,7 @@ async function runAppEngine(): Promise<void> {
 
       // execute helm upgrate --install
       await exec.exec('helm', args)
-      await setDeploymentStatus('success', deployment_id)
+      await setDeploymentStatus('success')
     } else {
       throw new Error('Task not found')
     }
