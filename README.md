@@ -72,11 +72,7 @@ jobs:
           APP_SECRET_MASTER_KEY: ${{ secrets.SuperSecret }}
 ```
 
-## Advanced
-
-### Supported kubernetes distribution
-
-- [Amazon EKS](https://aws.amazon.com/cn/eks/)
+## Parameters
 
 ### Environment Variables
 
@@ -100,6 +96,58 @@ jobs:
 | `containerPort` | String                 | Container server port. default value is `"3000"`                               |
 | `dryRun`        | Boolean                | Helm dry-run option. default value is `false`                                  |
 | `task`          | `"deploy" or "remove"` | Helm action. default value is `"deploy"`                                       |
+
+## Adavance Usage
+
+### Preview Environment
+
+A preview environment is an ephemeral environment created with the code of your pull request. It provides a realistic environment for testing and debugging.The preview environment will be **updated on each commit, and finally destroyed when the pull request is merged or closed**.
+
+```yaml
+name: updtaed-preview-environment-example
+
+on:
+  pull_request:
+    types: [opend, synchronize]
+jobs:
+  update_preview:
+    runs-on: ubuntu-latest
+    steps:
+      # ...
+      - name: Deployment to BAE
+        uses: brickdoc/app-engine@v1
+        with:
+          name: example-pr${{ github.event.pull_request.number}}
+          host: example-pr${{ github.event.pull_request.number}}.brickdoc.dev
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}
+```
+
+```yaml
+name: destroyed-preview-environment-example
+
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  update_preview:
+    runs-on: ubuntu-latest
+    steps:
+      # ...
+      - name: Destoryed BAE app
+        uses: brickdoc/app-engine@v1
+        with:
+          name: example-pr${{ github.event.pull_request.number}}
+          task: 'remove'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}
+```
+
+## Supported kubernetes distribution
+
+- [Amazon EKS](https://aws.amazon.com/cn/eks/)
 
 ## License
 
