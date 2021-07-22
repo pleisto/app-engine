@@ -1,5 +1,8 @@
 name: 'Brickdoc App Engine'
 description: 'Brickdoc App Engine is a MicroPaaS based on kubernetes'
+branding:
+  icon: 'cloud-lightning'
+  color: 'blue'
 inputs:
   type:
     description: 'app type'
