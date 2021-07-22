@@ -79,9 +79,10 @@ jobs:
     needs: build
     steps:
       - name: Deployment to App Engine
-        uses: brickdoc/app-engine@main
+        uses: brickdoc/app-engine@v1.beta1
         with:
           name: some-package
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}
@@ -136,6 +137,7 @@ jobs:
         with:
           name: example-pr${{ github.event.pull_request.number}}
           host: example-pr${{ github.event.pull_request.number}}.brickdoc.dev
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}

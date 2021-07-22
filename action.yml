@@ -34,6 +34,9 @@ inputs:
     description: 'Helm action `"deploy" | "remove"`'
     required: true
     default: 'deploy'
+  token:
+    required: true
+    description: 'Github token'
 
 runs:
   using: docker
