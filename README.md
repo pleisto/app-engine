@@ -79,7 +79,7 @@ jobs:
     needs: build
     steps:
       - name: Deployment to App Engine
-        uses: brickdoc/app-engine@v1.beta1
+        uses: brickdoc/app-engine@v1.beta2
         with:
           name: some-package
           token: ${{ secrets.GITHUB_TOKEN }}
