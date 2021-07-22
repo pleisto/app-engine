@@ -13,46 +13,59 @@ It is designed to reduce the workload for developers deploying **lightweight app
 - Convention over Configuration
 - [Optimize for programmer happiness](https://rubyonrails.org/doctrine/#optimize-for-programmer-happiness)
 
-## Quick Start
+## Quick Start example
 
 ```yaml
-name: example-github-actions-workflow
-
+---
+name: Example Continuous Deployment
 on:
   push:
+    paths:
+      # for monorepo
+      - 'packages/some-package/**'
     branches:
-      - 'master'
-      - 'main'
-env:
-  appName: example
+      - master
+      - main
 jobs:
-  main:
+  cancel:
+    # Cancel any previous CI runs to save GitHub Actions minutes
+    name: 'Cancel Previous Runs'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ github.token }}
+  build:
+    name: 'Build and Push Docker Image'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout the codebase
         uses: actions/checkout@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: $USERNAME
+          password: $PASSWORD
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ env.appName }}-${{ runner.os }}-buildx-${{ github.sha }}
+          key: somePackage-${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
-            ${{ env.appName }}-${{ runner.os }}-buildx-
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+            somePackage-${{ runner.os }}-buildx-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
           push: true
-          tags: orgs/${{ env.appName }}:${{ github.sha }}
+          tags: org/some-package:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
+          # monorepo use only
+          context: ./packages/some-package
+          file: ./packages/some-package/Dockerfile
         # Temp fix
         # https://github.com/docker/build-push-action/issues/252
         # https://github.com/moby/buildkit/issues/1896
@@ -60,11 +73,15 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-      - name: Deployment to BAE
-        uses: brickdoc/app-engine@v1
+  deploy:
+    name: 'Deployment to BAE'
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deployment to App Engine
+        uses: brickdoc/app-engine@main
         with:
-          name: example-prod
-          containerPort: 8000
+          name: some-package
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.awsAccessKey }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.awsAccessSecret }}
