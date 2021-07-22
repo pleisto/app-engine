@@ -25,7 +25,7 @@
     "postinstall": "husky install",
     "lint": "eslint src/**/*.ts",
     "build": "ncc build --minify --no-source-map-register src/main.ts -o dist",
-    "commit": "git add . && cz"
+    "commit": "yarn build && git add . && cz"
   },
   "dependencies": {
     "@actions/core": "^1.4.0",
