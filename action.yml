@@ -21,7 +21,7 @@ inputs:
   chart:
     description: 'Helm Charts'
     required: true
-    default: '/charts/bae-simple-web'
+    default: '/usr/local/charts/bae-simple-web'
   containerPort:
     description: 'Container Server Port'
     required: true
