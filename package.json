@@ -1,7 +1,7 @@
 {
   "name": "@brickdoc/app-engine",
   "version": "0.1.0",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/brickdoc/app-engine",
   "license": "Apache-2.0",
   "devDependencies": {
@@ -23,9 +23,8 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "build": "tsc",
     "lint": "eslint src/**/*.ts",
-    "package": "ncc build",
+    "build": "ncc build --minify --no-source-map-register src/main.ts -o dist",
     "commit": "git add . && cz"
   },
   "dependencies": {

@@ -1,6 +1,7 @@
 
 import { stringify } from 'yaml'
 import { writeFileSync, unlinkSync } from 'fs' 
+import * as core from '@actions/core'
 
 function getVarsFromEnv(prefix: string){
   return Object.keys(process.env).reduce((acc: NodeJS.Dict<string>, key) =>{
@@ -22,5 +23,6 @@ export function createValuesFile(otherVars = {}){
     secrets: getVarsFromEnv('APP_SECRET_'),
     ...otherVars
   })
+  core.debug(`helm values is:\n${payload}`)
   writeFileSync(valuesFile, payload)
 }
