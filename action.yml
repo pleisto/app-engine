@@ -35,7 +35,7 @@ inputs:
     required: true
     default: 'deploy'
   token:
-    required: true
+    required: false
     description: 'Github token'
 
 runs:

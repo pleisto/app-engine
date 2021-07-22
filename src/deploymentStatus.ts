@@ -8,7 +8,10 @@ export async function setDeploymentStatus(state: 'error' | 'failure' | 'inactive
     const name = core.getInput('name')
     const isService = core.getInput('type') === 'service'
     const serviceUrl = `https://github.com/${ghContext.repo.owner}/${ghContext.repo.repo}/commit/${ghContext.sha}/checks`
-
+    if (!token || !ghContext.payload.deployment) {
+      core.debug('not setting deployment status')
+      return
+    }
     const client = github.getOctokit(token)
     await client.rest.repos.createDeploymentStatus({
       ...ghContext.repo,
