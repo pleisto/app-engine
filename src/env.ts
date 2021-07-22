@@ -1,13 +1,12 @@
-
 import { stringify } from 'yaml'
-import { writeFileSync, unlinkSync } from 'fs' 
+import { writeFileSync } from 'fs'
 import * as core from '@actions/core'
 
-function getVarsFromEnv(prefix: string){
-  return Object.keys(process.env).reduce((acc: NodeJS.Dict<string>, key) =>{
+function getVarsFromEnv(prefix: string) {
+  return Object.keys(process.env).reduce((acc: NodeJS.Dict<string>, key) => {
     // filter env variables by prefix
     if (!key.startsWith(prefix)) return acc
-    
+
     // remove prefix from filtered key
     const newKey = key.replace(prefix, '')
     acc[newKey] = process.env[key]
@@ -17,7 +16,7 @@ function getVarsFromEnv(prefix: string){
 
 export const valuesFile = './values.yaml'
 
-export function createValuesFile(otherVars = {}){
+export function createValuesFile(otherVars = {}) {
   const payload = stringify({
     envs: getVarsFromEnv('APP_ENV_'),
     secrets: getVarsFromEnv('APP_SECRET_'),
