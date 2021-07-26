@@ -15,4 +15,5 @@ helm install apisix apisix/apisix --namespace kube-system --set admin.allow.ipLi
 helm install apisix-ingress-controller apisix/apisix-ingress-controller  \
   --set config.apisix.baseURL=http://apisix-admin:9180/apisix/admin \
   --set config.apisix.adminKey=${ADMIN_KEY} \
+  --set image.tag="1.1.0"
   --namespace kube-system

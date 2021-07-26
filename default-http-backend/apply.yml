@@ -1,4 +1,5 @@
 ---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: default-http-backend
@@ -25,15 +26,8 @@ spec:
       containers:
         - name: default-http-backend
           securityContext: {}
-          image: ''
+          image: 'ghcr.io/brickdoc/bae-default-http-backend:latest'
           imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
           ports:
             - name: http
               containerPort: 3000
@@ -41,7 +35,7 @@ spec:
           resources:
             limits:
               cpu: 10m
-              memory: 64Mi
+              memory: 32Mi
 ---
 apiVersion: v1
 kind: Service
@@ -60,3 +54,30 @@ spec:
   selector:
     app.kubernetes.io/name: default-http-backend
     app.kubernetes.io/instance: apisix-ingress-controller
+---
+apiVersion: apisix.apache.org/v2alpha1
+kind: ApisixRoute
+metadata:
+  name: default-http-backend-route
+  labels:
+    app.kubernetes.io/name: default-http-backend
+    app.kubernetes.io/instance: apisix-ingress-controller
+spec:
+  http:
+    - name: default-http-backend
+      priority: -999
+      match:
+        paths:
+          - '/*'
+        host:
+          - '*.brickdoc.app'
+          - brickdoc.app
+          - '*.brickdoc.dev'
+          - brickdoc.dev
+        methods:
+          - HEAD
+          - GET
+          - OPTIONS
+      backend:
+        serviceName: default-http-backend
+        servicePort: 80
