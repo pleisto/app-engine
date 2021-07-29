@@ -33,6 +33,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ .Values.image.name | quote }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+          - secretRef:
+              name: {{ include "brickdoc.fullname" . }}
           env:
             {{- range $key, $value := .Values.envs }}
             - name: {{ $key }}
