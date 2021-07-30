@@ -27,7 +27,8 @@ async function runAppEngine(): Promise<void> {
       const type = core.getInput('type')
       const chart = core.getInput('chart')
       const containerPort = core.getInput('containerPort')
-      const dryRun = core.getInput('dry-run')
+      const dryRun = core.getInput('dryRun')
+      const extraArgs = core.getInput('extraArgs')
       let image = core.getInput('image')
 
       if (!image) {
@@ -51,6 +52,7 @@ async function runAppEngine(): Promise<void> {
       // generate args
       const args = ['upgrade', '--install', '--atomic', '--wait', `--namespace=${namespace}`, `--values=${valuesFile}`, name, chart]
       if (dryRun) args.push('--dry-run')
+      if (extraArgs) args.push(...extraArgs.split(' '))
 
       // execute helm upgrate --install
       await exec.exec('helm', args)

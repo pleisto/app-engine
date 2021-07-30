@@ -1,9 +1,7 @@
 type: ""
 containerPort: ""
-envs: []
-secrets:
-  name: 1
-  user: "22"
+envs: {}
+secrets: {}
 
 # Default values for bae-simple-web.
 # This is a YAML-formatted file.

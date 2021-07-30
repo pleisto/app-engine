@@ -115,6 +115,7 @@ jobs:
 | `containerPort` | String                 | Container server port. default value is `"3000"`                               |
 | `dryRun`        | Boolean                | Helm dry-run option. default value is `false`                                  |
 | `task`          | `"deploy" or "remove"` | Helm action. default value is `"deploy"`                                       |
+| `extraArgs`     | String                 | Extra Arguements for helm command                                              |
 
 ## Adavance Usage
 
