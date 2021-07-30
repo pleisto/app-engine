@@ -33,6 +33,9 @@ inputs:
     description: 'Helm dry-run option. default value is `false`'
     required: true
     default: false
+  extraArgs:
+    description: 'Arguements for helm command'
+    required: false
   task:
     description: 'Helm action `"deploy" | "remove"`'
     required: true
