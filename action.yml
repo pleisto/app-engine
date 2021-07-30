@@ -29,10 +29,6 @@ inputs:
     description: 'Container Server Port'
     required: true
     default: '3000'
-  dryRun:
-    description: 'Helm dry-run option. default value is `false`'
-    required: true
-    default: false
   extraArgs:
     description: 'Arguements for helm command'
     required: false

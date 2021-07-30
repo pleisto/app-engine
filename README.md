@@ -113,7 +113,6 @@ jobs:
 | `host`          | String                 | Website ingress host. default value is `${name}.${ENV.BAE_DOMAIN}`             |
 | `chart`         | String                 | Helm charts. default value is `/charts/bae-simple-web`                         |
 | `containerPort` | String                 | Container server port. default value is `"3000"`                               |
-| `dryRun`        | Boolean                | Helm dry-run option. default value is `false`                                  |
 | `task`          | `"deploy" or "remove"` | Helm action. default value is `"deploy"`                                       |
 | `extraArgs`     | String                 | Extra Arguements for helm command                                              |
 
