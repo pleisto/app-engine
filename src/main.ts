@@ -17,7 +17,7 @@ async function runAppEngine(): Promise<void> {
     await updateKubeconfig()
 
     if (task === 'remove') {
-      await exec.exec('helm', ['delete', '-n', namespace, name], {
+      await exec.exec('helm', ['uninstall', name, '-n', namespace], {
         ignoreReturnCode: true
       })
       await setDeploymentStatus('inactive')
