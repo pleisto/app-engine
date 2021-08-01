@@ -1,10 +1,10 @@
 ---
-name: Build Default Http Backend
+name: Build Base Image
 on:
   push:
     paths:
-      - 'default-http-backend/**'
-      - '.github/workflows/build-default-http-backend.yml'
+      - 'Dockerfile.base'
+      - '.github/workflows/build-base-image.yml'
     branches:
       - master
       - main
@@ -36,16 +36,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: defaultHttpBackend-${{ runner.os }}-buildx-${{ github.sha }}
+          key: appEngineBase-${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
-            defaultHttpBackend-${{ runner.os }}-buildx-
+            appEngineBase-${{ runner.os }}-buildx-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./default-http-backend
-          file: ./default-http-backend/Dockerfile
+          context: .
+          file: ./Dockerfile.base
           push: true
-          tags: ghcr.io/brickdoc/bae-default-http-backend:latest
+          tags: ghcr.io/brickdoc/app-engine-base:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
         # Temp fix
