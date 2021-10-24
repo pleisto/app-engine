@@ -1,6 +1,6 @@
 FROM debian:buster-slim as installer
-ARG HELM_VERSION=3.6.3
-ARG AWS_EKS_PATH=1.20.4/2021-04-12
+ARG HELM_VERSION=3.7.1
+ARG AWS_EKS_PATH=1.21.2/2021-07-05
 RUN apt-get update && apt-get install -y curl unzip && \
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
   unzip awscliv2.zip && ./aws/install --bin-dir /aws-cli-bin/ && \
