@@ -59,7 +59,7 @@ async function runAppEngine(): Promise<void> {
       throw new Error('Task not found')
     }
   } catch (e) {
-    core.setFailed(e.message)
+    core.setFailed((e as Error).message)
   }
 }
 

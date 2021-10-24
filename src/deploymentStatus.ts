@@ -33,7 +33,7 @@ export async function setDeploymentStatus(state: 'error' | 'failure' | 'inactive
       })
     }
   } catch (e) {
-    core.warning(`Failed to set deployment status: ${e.message}`)
+    core.warning(`Failed to set deployment status: ${(e as Error).message}`)
   }
 }
 

@@ -17,7 +17,7 @@ LABEL org.opencontainers.image.licenses = "Apache-2.0"
 LABEL org.opencontainers.image.source = "https://github.com/brickdoc/app-engine"
 ENV AWS_DEFAULT_REGION=us-east-1
 ENV AWS_EKS_CLUSTER=global-corp-kube
-ENV BAE_DOMAIN=brickdoc.app
+ENV BAE_DOMAIN=brickdoc.dev
 
 COPY --from=installer /usr/local/aws-cli/ /usr/local/aws-cli/
 COPY --from=installer /aws-cli-bin/ /usr/local/bin/

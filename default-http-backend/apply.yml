@@ -70,8 +70,6 @@ spec:
         paths:
           - '/*'
         host:
-          - '*.brickdoc.app'
-          - brickdoc.app
           - '*.brickdoc.dev'
           - brickdoc.dev
         methods:
