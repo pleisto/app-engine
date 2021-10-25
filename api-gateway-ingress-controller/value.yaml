@@ -1,0 +1,19 @@
+controller:
+  kind: DaemonSet
+  config:
+    use-forwarded-headers: true
+    compute-full-forwarded-for: true
+    generate-request-id: true
+  addHeaders:
+    Server: 'BrickdocAppEngine'
+  service:
+    type: NodePort
+    enableHttps: false
+    nodePorts:
+      http: 30155
+defaultBackend:
+  enabled: true
+  port: 3000
+  image:
+    repository: ghcr.io/brickdoc/bae-default-http-backend
+    tag: latest
