@@ -4,6 +4,10 @@ controller:
     use-forwarded-headers: true
     compute-full-forwarded-for: true
     generate-request-id: true
+    use-gzip: true
+    enable-brotli: true
+    brotli-level: 6
+    gzip-level: 4
   addHeaders:
     Server: 'BrickdocAppEngine'
   service:
